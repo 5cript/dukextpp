@@ -14,15 +14,15 @@
 
 // only reads most important stuff
 
-struct PackageRepository : public JSON::FusionStruct <PackageRepository>
-                         , public JSON::ParsableStruct <PackageRepository>
+struct PackageRepository : public JSON::Stringifiable <PackageRepository>
+                         , public JSON::Parsable <PackageRepository>
 {
     std::string type;
     std::string url;
 };
 
-struct Package : public JSON::FusionStruct <Package>
-               , public JSON::ParsableStruct <Package>
+struct Package : public JSON::Stringifiable <Package>
+               , public JSON::Parsable <Package>
 {
     std::string name;
     std::string version;
@@ -38,25 +38,12 @@ struct Package : public JSON::FusionStruct <Package>
 
 BOOST_FUSION_ADAPT_STRUCT
 (
-    PackageRepository,
-    (std::string, type)
-    (std::string, url)
+    PackageRepository, type, url
 )
 
-using StringMap = std::map <std::string, std::string>;
 BOOST_FUSION_ADAPT_STRUCT
 (
-    Package,
-    (std::string, name)
-    (std::string, version)
-    (std::string, description)
-    (std::string, homepage)
-    (std::string, icon)
-    (std::string, license)
-    (std::string, main)
-//  (std::vector <std::string>, keywords)
-    (StringMap, dependencies)
-    (StringMap, devDependencies)
+    Package, name, version, description, homepage, icon, license, main, dependencies, devDependencies
 )
 
 bool readPackageJson(std::string const& fileName, Package& pack);
