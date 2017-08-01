@@ -275,13 +275,13 @@ namespace Duktape { namespace Node
         if (signal == "SIGTERM")
             kill(pid, SIGTERM);
         else if (signal == "SIGABRT")
-            kill(pid, SIGABORT);
+            kill(pid, SIGABRT);
         else if (signal == "SIGKILL")
             kill(pid, SIGKILL);
         else if (signal == "SIGQUIT")
             kill(pid, SIGQUIT);
         else if (signal == "SIGSTOP")
-            kill(pid, SIGSTOP)
+            kill(pid, SIGSTOP);
         else
             kill(pid, SIGTERM);
 #endif

@@ -1,9 +1,12 @@
 #include "duktape.hpp"
 #include "plugins/error/error.hpp"
 
-#include <stdexcept>
 #include <boost/filesystem.hpp>
+
+#include <stdexcept>
 #include <unordered_map>
+#include <fstream>
+#include <sstream>
 
 namespace fs = boost::filesystem;
 
@@ -56,7 +59,11 @@ void Duktape::Context::runFile(std::string const& file)
     auto p = fs::path(baseDir_) / fs::path(file);
     p = p.make_preferred().string();
 
-    if (duk_peval_file(context_, p.string().c_str()) != 0)
+    std::ifstream reader{file, std::ios_base::binary};
+    std::stringstream sstr;
+    sstr << reader.rdbuf();
+
+    if (duk_peval_string(context_, sstr.str().c_str()) != 0)
     {
         auto error = decodeError(context_);
 

@@ -5,6 +5,7 @@
 #include "object.hpp"
 #include "plugins/plugin.hpp"
 
+#include <vector>
 #include <string>
 #include <memory>
 #include <boost/fusion/mpl.hpp>
